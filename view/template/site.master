@@ -1,0 +1,57 @@
+
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Think hard</title>
+    <script src="{% static javascript/prettify.js %}"></script>
+    <script src="/javascript/jquery.js"></script>
+    <script src="/javascript/tools.js"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="/css/prettify.css">
+    <link rel="stylesheet" type="text/css" media="all" href="/css/style.css">
+    <style>
+        .template{
+        display: none;
+        }
+    </style>
+</head>
+<body onload="prettyPrint()">
+<div id="header">
+    <div id="nav">
+        <div id="logo">
+            <span>Think hard<sub>未经思考的知识不是好知识</sub></span>
+        </div>
+        <div id="menu">
+            <ul id='pages'>
+                <li><a href="/home">首页</a></li>
+                <li><a href="/blog">博客</a></li>
+                <li><a href="/lab">实验</a></li>
+                <li><a href="/resume">简历</a></li>
+            </ul>
+            <div style="display:inline-block">
+                <form action="/Search/query">
+                    <input id="query" type="text" name="q" placeholder="输入关键字进行搜索">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<Simple:ContentPlaceHolder id ='content'></Simple:ContentPlaceHolder>
+
+<Simple:ContentPlaceHolder id ='script'></Simple:ContentPlaceHolder>
+
+ <script>
+       if(this.location.pathname=='/'){
+            this.location.pathname='/home';
+       }
+       $("#pages a").each(function(index,item){
+            if(window.location.href.toLowerCase().indexOf(item.href.toLowerCase())!=-1){
+                $(item).parent().addClass("on");
+            }
+
+       });
+
+ </script>
+
+</body>
+</html>

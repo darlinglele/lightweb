@@ -1,0 +1,31 @@
+<simple:Master path="./view/template/site.master"></simple:master>
+
+<Simple:Content ContentPlaceHolderId="content">
+    <div class="article">
+        <div>
+            <img class="avatar" src="/images/avatar.png"/>
+
+            <div class="title">
+                <h3><a>${title}</a></h3>
+                <span>${date} ${author}</span>
+            </div>
+
+        </div>
+        <div class="text">${text}</div>
+    </div>
+    </Simple:Content>
+
+<Simple:Content ContentPlaceHolderId="script" >
+    <script>
+
+    if(ViewData.latest ==undefined){
+        ViewData.latest = {title: '暂未更新',
+            author:'系统',
+            date: new Date(),
+            text:''
+            };
+        //ViewData.similar = {id:'', title:''};
+    }
+   $(".article").html(apply($(".article").html(),ViewData.latest));
+    </script>
+</Simple:Content>

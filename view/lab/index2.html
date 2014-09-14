@@ -1,0 +1,48 @@
+<simple:Master path="./view/template/site.master"></simple:master>
+
+<Simple:Content ContentPlaceHolderId="content" runat="server">
+    <div id="articles"></div>
+    <div id="articleTemplate" class ="template">
+        <div class="article">
+            ${feed.id}<h3><a href="${feed.url}">${feed.title}</a></h3><br>
+            <span>${feed.category}</span>
+            <div id="tags">
+                ${tags.html}
+            </div>
+            <p>${feed.summary}</p>
+        </div>
+    </div>
+
+</Simple:Content>
+
+<Simple:Content ContentPlaceHolderId="script" runat="server">
+    <script>
+    for(var i=ViewData.items.length-1; i >= 0; i--){
+        var feed = ViewData.items[i];
+        var category = ViewData.tags.filter(function(item){return item.id== feed.category})[0]
+        feed.category = category==undefined? "暂未分类": category.name;
+        feed.summary = feed.summary.substring(0,200);
+        var obj={};
+        obj.feed = feed;
+        // obj.tags = ViewData.tags;
+        obj.feed = feed;
+        obj.tags = {};
+        obj.tags.html = "";
+
+        for(var j = 0;  j < ViewData.tags.length; j++){
+            var tag = ViewData.tags[j];
+            if(feed.tags!=undefined && feed.tags.indexOf(tag.id.toString().trim())>-1){
+
+                obj.tags.html += '<input checked="checked" type="checkbox" id="' + feed.id +'-'+ tag.id+ '" onchange="onChange(this)">' + tag.name + '</input>';
+            }
+            else{
+                obj.tags.html += '<input type="checkbox" id="' + feed.id +'-'+ tag.id+ '" onchange="onChange(this)">' + tag.name + '</input>';
+            }
+
+        };
+        var article = $(apply($('#articleTemplate').html(), obj));
+        $("#articles").append(article);
+    }
+    </script>
+</Simple:Content>
+

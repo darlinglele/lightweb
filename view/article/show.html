@@ -1,0 +1,100 @@
+<html>
+<head>
+    <title>全景图</title>
+    <script src="/javascript/jquery.js"></script>
+    <style>
+        body{
+        <!--background-color:grey;-->
+        background-repeat:no-repeat no-repeat;
+        background-size:cover;
+        background-image:url(/images/universe.jpg);
+        }
+
+        #header{
+        border-radius:5px;
+        opacity:0.5;
+        background-color:grey;
+        }
+
+        #container{
+        border-radius:5px;
+        opacity:0.5;
+        background-color:grey;
+        }
+
+        .left {
+        border-radius:5px;
+        float:left;
+        }
+        .right {
+        border-radius:5px;
+        float:right;
+
+        }
+        .cluster{
+        <!--filter:alpha(Opacity=60);-->
+        <!--opacity: 0.3;-->
+        border-radius:5px;
+        vertical-align:middle;
+        margin:2px;
+        padding:2px;
+        overflow:hidden;
+        }
+
+        .left .content{
+        }
+        .content{
+        color:black;
+
+        }
+
+    </style>
+</head>
+<body>
+<div id=""></div>
+<div id="header">
+    <h1 style="opacity:1.0">${Show history}</h1>
+</div>
+<div id="root" class="cluster" style="display:none">
+    <div class="left">
+        <div class="cluster">
+            <div class="left">left</div>
+            <div class="right">right</div>
+        </div>
+    </div>
+    <div class="right">right1</div>
+</div>
+
+<div id="container" class=""></div>
+
+</body>
+
+<script>
+    var cluster = ViewData.cluster;
+    function show(cluster,container){
+        console.log(container.width());
+        var clusterDiv = $('<div>',{class:'cluster'});
+        if(cluster.left!=undefined){
+            var leftDiv = $('<div>',{class:'left',style:'background-color:grey'});
+            clusterDiv.append(leftDiv);
+            show(cluster.left, leftDiv);
+        }
+        if(cluster.right!=undefined){
+            var rightDiv= $('<div>',{class:'right',style:'background-color:green'});
+            clusterDiv.append(rightDiv);
+            show(cluster.right,rightDiv);
+        }
+        else{
+            var label = $("<div>",{class:'content',text: cluster.id});
+            clusterDiv.append(label);
+        }
+        container.append(clusterDiv);
+    }
+    show(cluster, $("#container"));
+
+
+
+
+
+</script>
+</html>

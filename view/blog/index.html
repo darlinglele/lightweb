@@ -1,0 +1,15 @@
+<simple:Master path="./view/template/site.master"></simple:master>
+<Simple:Content ContentPlaceHolderId="content">
+    <div id="articles"></div>
+</Simple:Content>
+
+<Simple:Content ContentPlaceHolderId="script">
+    <script>
+    this.a=null;
+    var articleTemp = '<div class="article brief"><div><img class="avatar" src="static/images/avatar.png"/><div class="title"><h3><a href="/blog/view/${id}">${title}</a></h3><span>${author}  ${date}</span></div></div><div class="text">${text}</div></div>';
+    for(var i=ViewData.blogs.length-1; i >= 0; i--){
+        ViewData.blogs[i].text =$(ViewData.blogs[i].text).first().wrap('<div>').parent().html();
+        $("#articles").append(apply(articleTemp,ViewData.blogs[i]));
+    }
+    </script>
+</Simple:Content>
